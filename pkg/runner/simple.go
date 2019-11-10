@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -59,7 +60,7 @@ func (r *SimpleRunner) Prepare(input map[string][]byte) (ffuf.Request, error) {
 			headers[strings.Replace(h, keyword, string(inputitem), -1)] = strings.Replace(v, keyword, string(inputitem), -1)
 		}
 		req.Headers = headers
-		req.Url = strings.Replace(req.Url, keyword, string(inputitem), -1)
+		req.Url = strings.Replace(req.Url, keyword, url.QueryEscape(string(inputitem)), -1)
 		req.Data = []byte(strings.Replace(string(req.Data), keyword, string(inputitem), -1))
 	}
 
